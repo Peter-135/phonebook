@@ -34,8 +34,15 @@ const App = () => {
     },
     {
       title: "Action",
-      dataIndex: "Action",
-      key: "Action",
+      key: "action",
+      //   render: () => (<Button type="default" onClick={editItem}>
+      //   Edit
+      // </Button>
+
+      // <Button type="default" onClick={deleteItem}>
+      //   Delete
+      //  </Button>
+      // )
     },
   ];
 
@@ -59,6 +66,17 @@ const App = () => {
   };
 
   const [data, setData] = useState([]);
+
+  React.useEffect(() => {
+    const ifDataExists = localStorage.getItem("data-input");
+    if (ifDataExists) {
+      setData(JSON.parse(ifDataExists));
+    }
+  }, []);
+
+  React.useEffect(() => {
+    localStorage.setItem("data-input", JSON.stringify(data));
+  });
 
   const [firstNameTerm, setFirstNameTerm] = useState("");
   const [lastNameTerm, setLastNameTerm] = useState("");
