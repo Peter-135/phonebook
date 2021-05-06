@@ -58,7 +58,7 @@ const App = () => {
     setIsModalVisible(false);
   };
 
-  const [data, setData] = useState([{}]);
+  const [data, setData] = useState([]);
 
   const [firstNameTerm, setFirstNameTerm] = useState("");
   const [lastNameTerm, setLastNameTerm] = useState("");
@@ -81,6 +81,17 @@ const App = () => {
     setData([...newData]);
     setIsModalVisible(false);
   };
+  // Array.splice([ITEM LOCATION], [Number of Item])
+
+  const editItem = () => {
+    console.log("Hello World");
+  };
+
+  const deleteItem = () => {
+    let byeData = data;
+    byeData.splice(0, 1);
+    setData([...byeData]);
+  };
 
   return (
     <div className="App">
@@ -102,6 +113,7 @@ const App = () => {
               placeholder="First Name"
               value={firstNameTerm}
               onChange={(e) => setFirstNameTerm(e.target.value)}
+              onClick={editItem}
             />
           </Form.Item>
           <Form.Item
@@ -113,6 +125,7 @@ const App = () => {
               placeholder="Last Name"
               value={lastNameTerm}
               onChange={(e) => setLastNameTerm(e.target.value)}
+              onClick={editItem}
             />
           </Form.Item>
           <Form.Item name="workPhone" label="Work Phone">
@@ -120,6 +133,7 @@ const App = () => {
               placeholder="Work Phone"
               value={workPhoneTerm}
               onChange={(e) => setWorkPhoneTerm(e.target.value)}
+              onClick={editItem}
             />
           </Form.Item>
           <Form.Item name="homePhone" label="Home Phone">
@@ -127,6 +141,7 @@ const App = () => {
               placeholder="Home Phone"
               value={homePhoneTerm}
               onChange={(e) => setHomePhoneTerm(e.target.value)}
+              onClick={editItem}
             />
           </Form.Item>
           <Form.Item name="cellPhone" label="Cell Phone">
@@ -134,6 +149,7 @@ const App = () => {
               placeholder="Cell Phone"
               value={cellPhoneTerm}
               onChange={(e) => setCellPhoneTerm(e.target.value)}
+              onClick={editItem}
             />
           </Form.Item>
         </Form>
@@ -141,8 +157,16 @@ const App = () => {
       <Button type="primary" onClick={showModal}>
         Add New Contact
       </Button>
+      <Button type="default" onClick={editItem}>
+        Edit
+      </Button>
+      <Button type="default" onClick={deleteItem}>
+        Delete
+      </Button>
     </div>
   );
 };
 
 export default App;
+
+// button with delete first, then onclick fhas function to delete the
