@@ -1,8 +1,9 @@
 import "./App.css";
-import { Table, Modal, Button } from "antd";
+import { Table, Modal, Button, Form, Input } from "antd";
 import "antd/dist/antd.css";
-import MainButton from "./components/MainButton";
+
 import React, { useState } from "react";
+import { formatCountdown } from "antd/lib/statistic/utils";
 
 const App = () => {
   const columns = [
@@ -38,22 +39,10 @@ const App = () => {
     },
   ];
 
-  const data = [
-    {
-      firstName: "Peter",
-      lastName: "Parker",
-      workPhone: 1234567890,
-      homePhone: 9876543210,
-      cellPhone: 2345678901,
-    },
-    {
-      firstName: "Clarke",
-      lastName: "Kent",
-      workPhone: 1234561234,
-      homePhone: 9876545678,
-      cellPhone: 2345677654,
-    },
-  ];
+  // Array.push(objectName)
+  //in my case, data.push(objectName)
+
+  // get an object and push to the above array, use form to create an object (formObject as name?)
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -69,6 +58,30 @@ const App = () => {
     setIsModalVisible(false);
   };
 
+  const [data, setData] = useState([{}]);
+
+  const [firstNameTerm, setFirstNameTerm] = useState("");
+  const [lastNameTerm, setLastNameTerm] = useState("");
+  const [workPhoneTerm, setWorkPhoneTerm] = useState("");
+  const [homePhoneTerm, setHomePhoneTerm] = useState("");
+  const [cellPhoneTerm, setCellPhoneTerm] = useState("");
+
+  let newInfo = {
+    firstName: firstNameTerm,
+    lastName: lastNameTerm,
+    workPhone: workPhoneTerm,
+    homePhone: homePhoneTerm,
+    cellPhone: cellPhoneTerm,
+  };
+
+  const pushArray = () => {
+    let newData = data;
+
+    newData.push(newInfo);
+    setData([...newData]);
+    setIsModalVisible(false);
+  };
+
   return (
     <div className="App">
       <Table dataSource={data} columns={columns} />
@@ -76,12 +89,54 @@ const App = () => {
       <Modal
         title="Add New Contact"
         visible={isModalVisible}
-        onOk={handleOk}
+        onOk={pushArray}
         onCancel={handleCancel}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents..</p>
+        <Form /*form={form} */ name="userForm">
+          <Form.Item
+            name="firstName"
+            label="First Name"
+            rules={[{ required: true, message: "'firstName' is required" }]}
+          >
+            <Input
+              placeholder="First Name"
+              value={firstNameTerm}
+              onChange={(e) => setFirstNameTerm(e.target.value)}
+            />
+          </Form.Item>
+          <Form.Item
+            name="lastName"
+            label="Last Name"
+            rules={[{ required: true }]}
+          >
+            <Input
+              placeholder="Last Name"
+              value={lastNameTerm}
+              onChange={(e) => setLastNameTerm(e.target.value)}
+            />
+          </Form.Item>
+          <Form.Item name="workPhone" label="Work Phone">
+            <Input
+              placeholder="Work Phone"
+              value={workPhoneTerm}
+              onChange={(e) => setWorkPhoneTerm(e.target.value)}
+            />
+          </Form.Item>
+          <Form.Item name="homePhone" label="Home Phone">
+            <Input
+              placeholder="Home Phone"
+              value={homePhoneTerm}
+              onChange={(e) => setHomePhoneTerm(e.target.value)}
+            />
+          </Form.Item>
+          <Form.Item name="cellPhone" label="Cell Phone">
+            <Input
+              placeholder="Cell Phone"
+              value={cellPhoneTerm}
+              onChange={(e) => setCellPhoneTerm(e.target.value)}
+            />
+          </Form.Item>
+        </Form>
       </Modal>
       <Button type="primary" onClick={showModal}>
         Add New Contact
