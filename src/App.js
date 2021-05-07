@@ -2,10 +2,19 @@ import "./App.css";
 import { Table, Modal, Button, Form, Input } from "antd";
 import "antd/dist/antd.css";
 
-import React, { useState } from "react";
-import { formatCountdown } from "antd/lib/statistic/utils";
+import React, { useState, useEffect } from "react";
+// import { formatCountdown } from "antd/lib/statistic/utils";
 
 const App = () => {
+  const editItem = () => {
+    console.log("Hello World");
+  };
+
+  const deleteItem = () => {
+    let byeData = data;
+    byeData.splice(0, 1);
+    setData([...byeData]);
+  };
   const columns = [
     {
       title: "FirstName",
@@ -35,14 +44,16 @@ const App = () => {
     {
       title: "Action",
       key: "action",
-      //   render: () => (<Button type="default" onClick={editItem}>
-      //   Edit
-      // </Button>
-
-      // <Button type="default" onClick={deleteItem}>
-      //   Delete
-      //  </Button>
-      // )
+      render: () => (
+        <>
+          <Button type="default" onClick={editItem}>
+            Edit
+          </Button>
+          <Button type="default" onClick={deleteItem}>
+            Delete
+          </Button>
+        </>
+      ),
     },
   ];
 
@@ -101,20 +112,19 @@ const App = () => {
   };
   // Array.splice([ITEM LOCATION], [Number of Item])
 
-  const editItem = () => {
-    console.log("Hello World");
-  };
+  // const editItem = () => {
+  //   console.log("Hello World");
+  // };
 
-  const deleteItem = () => {
-    let byeData = data;
-    byeData.splice(0, 1);
-    setData([...byeData]);
-  };
+  // const deleteItem = () => {
+  //   let byeData = data;
+  //   byeData.splice(0, 1);
+  //   setData([...byeData]);
+  // };
 
   return (
     <div className="App">
       <Table dataSource={data} columns={columns} />
-      {/* <MainButton /> */}
       <Modal
         title="Add New Contact"
         visible={isModalVisible}
@@ -175,16 +185,14 @@ const App = () => {
       <Button type="primary" onClick={showModal}>
         Add New Contact
       </Button>
-      <Button type="default" onClick={editItem}>
+      {/* <Button type="default" onClick={editItem}>
         Edit
       </Button>
       <Button type="default" onClick={deleteItem}>
         Delete
-      </Button>
+      </Button> */}
     </div>
   );
 };
 
 export default App;
-
-// button with delete first, then onclick fhas function to delete the
