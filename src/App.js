@@ -6,9 +6,9 @@ import React, { useState, useEffect } from "react";
 // import { formatCountdown } from "antd/lib/statistic/utils";
 
 const App = () => {
-  const editItem = () => {
-    console.log("Hello World");
-  };
+  // const editItem = () => {
+  //   console.log("Hello World")
+  // };
 
   const deleteItem = () => {
     let byeData = data;
@@ -46,7 +46,7 @@ const App = () => {
       key: "action",
       render: () => (
         <>
-          <Button type="default" onClick={editItem}>
+          <Button type="default" onClick={showModal}>
             Edit
           </Button>
           <Button type="default" onClick={deleteItem}>
@@ -95,6 +95,16 @@ const App = () => {
   const [homePhoneTerm, setHomePhoneTerm] = useState("");
   const [cellPhoneTerm, setCellPhoneTerm] = useState("");
 
+  const [isEditing, setEditing] = useState(false);
+
+  const editingInput = () => {
+    setEditing(true);
+  };
+
+  const notEditingInput = () => {
+    setEditing(false);
+  };
+
   let newInfo = {
     firstName: firstNameTerm,
     lastName: lastNameTerm,
@@ -141,7 +151,7 @@ const App = () => {
               placeholder="First Name"
               value={firstNameTerm}
               onChange={(e) => setFirstNameTerm(e.target.value)}
-              onClick={editItem}
+              // onClick={editItem}
             />
           </Form.Item>
           <Form.Item
@@ -153,7 +163,7 @@ const App = () => {
               placeholder="Last Name"
               value={lastNameTerm}
               onChange={(e) => setLastNameTerm(e.target.value)}
-              onClick={editItem}
+              // onClick={editItem}
             />
           </Form.Item>
           <Form.Item name="workPhone" label="Work Phone">
@@ -161,7 +171,7 @@ const App = () => {
               placeholder="Work Phone"
               value={workPhoneTerm}
               onChange={(e) => setWorkPhoneTerm(e.target.value)}
-              onClick={editItem}
+              // onClick={editItem}
             />
           </Form.Item>
           <Form.Item name="homePhone" label="Home Phone">
@@ -169,7 +179,7 @@ const App = () => {
               placeholder="Home Phone"
               value={homePhoneTerm}
               onChange={(e) => setHomePhoneTerm(e.target.value)}
-              onClick={editItem}
+              // onClick={editItem}
             />
           </Form.Item>
           <Form.Item name="cellPhone" label="Cell Phone">
@@ -177,7 +187,7 @@ const App = () => {
               placeholder="Cell Phone"
               value={cellPhoneTerm}
               onChange={(e) => setCellPhoneTerm(e.target.value)}
-              onClick={editItem}
+              // onClick={editItem}
             />
           </Form.Item>
         </Form>
