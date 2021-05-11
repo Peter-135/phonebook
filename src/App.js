@@ -10,11 +10,30 @@ const App = () => {
   //   console.log("Hello World")
   // };
 
-  const deleteItem = () => {
-    let byeData = data;
-    byeData.splice(0, 1);
-    setData([...byeData]);
+  // Maybe filter out elements that are NOT the index
+
+  // const deleteItem = () => {
+  //   let byeData = data;
+  //   byeData.splice(0, 1);
+  //   setData([...byeData]);
+  // };
+
+  // let elementToRemove = 2;
+
+  const deleteItem = (data) => {
+    let byeData = data; // this is right
+    let indexToDelete = byeData.findIndex(
+      //the way I'm using findIndex is wrong
+      (element, index) => index === byeData[index]
+    );
+
+    byeData.splice(indexToDelete, 1); // this is right
+    setData([...byeData]); // This is right
   };
+
+  // How do I find index of row I am trying to delete?
+  // console.log(index);
+
   const columns = [
     {
       title: "FirstName",
@@ -44,11 +63,12 @@ const App = () => {
     {
       title: "Action",
       key: "action",
-      render: () => (
+      render: (a, data) => (
         <>
           <Button type="default" onClick={showModal}>
             Edit
           </Button>
+          {/* <Button type="default">Save</Button> */}
           <Button type="default" onClick={deleteItem}>
             Delete
           </Button>
@@ -56,6 +76,17 @@ const App = () => {
       ),
     },
   ];
+
+  let peter = {
+    dave: 3456,
+    bob: 4,
+  };
+
+  // console.log(peter.dave);
+
+  // console.log(peter.bob);
+
+  //findIndex, using
 
   // Array.push(objectName)
   //in my case, data.push(objectName)
@@ -88,6 +119,8 @@ const App = () => {
   React.useEffect(() => {
     localStorage.setItem("data-input", JSON.stringify(data));
   });
+
+  // save on button click, when it deletes and add
 
   const [firstNameTerm, setFirstNameTerm] = useState("");
   const [lastNameTerm, setLastNameTerm] = useState("");
