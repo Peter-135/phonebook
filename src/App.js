@@ -5,6 +5,8 @@ import "antd/dist/antd.css";
 import React, { useState, useEffect } from "react";
 // import { formatCountdown } from "antd/lib/statistic/utils";
 
+// let elementToRemove = 2;
+
 const App = () => {
   // const editItem = () => {
   //   console.log("Hello World")
@@ -17,22 +19,32 @@ const App = () => {
   //   byeData.splice(0, 1);
   //   setData([...byeData]);
   // };
+  const [data, setData] = useState([]);
 
-  // let elementToRemove = 2;
+  const deleteItem = (funcData) => {
+    //[...data]
 
-  const deleteItem = (data) => {
-    let byeData = data; // this is right
-    let indexToDelete = byeData.findIndex(
-      //the way I'm using findIndex is wrong
-      (element, index) => index === byeData[index]
-    );
+    let allData = [...data]; // r
 
-    byeData.splice(indexToDelete, 1); // this is right
-    setData([...byeData]); // This is right
+    console.log({ allData: allData });
+    console.log(funcData);
+    // console.log(item);
+    // console.log("HELLO WORLD");
+
+    const indexTesting = (element, index) =>
+      JSON.stringify(element) === JSON.stringify(funcData);
+
+    // // console.log(item);
+    let indexToDelete = allData.findIndex(indexTesting);
+
+    if (indexToDelete !== -1) {
+      allData.splice(indexToDelete, 1); // r
+    }
+    setData([...allData]); // r
   };
+  // console.log(data);
 
-  // How do I find index of row I am trying to delete?
-  // console.log(index);
+  //  How do I find index of row I am trying to delete?
 
   const columns = [
     {
@@ -65,22 +77,25 @@ const App = () => {
       key: "action",
       render: (a, data) => (
         <>
+          {/* <Button type="default" onClick={saveItem}>
+            Save
+          </Button> */}
           <Button type="default" onClick={showModal}>
             Edit
           </Button>
           {/* <Button type="default">Save</Button> */}
-          <Button type="default" onClick={deleteItem}>
+          <Button type="default" onClick={() => deleteItem(data)}>
             Delete
           </Button>
         </>
       ),
     },
   ];
-
-  let peter = {
-    dave: 3456,
-    bob: 4,
-  };
+  // try console.log(a) and data,
+  // let peter = {
+  //   dave: 3456,
+  //   bob: 4,
+  // };
 
   // console.log(peter.dave);
 
@@ -107,7 +122,9 @@ const App = () => {
     setIsModalVisible(false);
   };
 
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
+
+  // console.log(data);
 
   React.useEffect(() => {
     const ifDataExists = localStorage.getItem("data-input");
@@ -128,15 +145,15 @@ const App = () => {
   const [homePhoneTerm, setHomePhoneTerm] = useState("");
   const [cellPhoneTerm, setCellPhoneTerm] = useState("");
 
-  const [isEditing, setEditing] = useState(false);
+  // const [isEditing, setEditing] = useState(false);
 
-  const editingInput = () => {
-    setEditing(true);
-  };
+  // const editingInput = () => {
+  //   setEditing(true);
+  // };
 
-  const notEditingInput = () => {
-    setEditing(false);
-  };
+  // const notEditingInput = () => {
+  //   setEditing(false);
+  // };
 
   let newInfo = {
     firstName: firstNameTerm,
@@ -155,9 +172,9 @@ const App = () => {
   };
   // Array.splice([ITEM LOCATION], [Number of Item])
 
-  // const editItem = () => {
-  //   console.log("Hello World");
-  // };
+  const saveItem = () => {
+    console.log("Hello World");
+  };
 
   // const deleteItem = () => {
   //   let byeData = data;
@@ -239,3 +256,17 @@ const App = () => {
 };
 
 export default App;
+
+// Things I've tried
+
+//   // let indexToDelete = byeData.findIndex(testForIndex);
+// let indexToDelete = byeData.findIndex((element, index) => element === item);
+// let indexToDelete = byeData.findIndex(indexTesting);
+
+// let indexToDelete = byeData.findIndex(
+// w
+//   (element, index) => index === byeData[index]
+// );
+//   // let indexToDelete = byeData.findIndex(testForIndex);
+// let indexToDelete = byeData.findIndex((element, index) => element === item);
+// let indexToDelete = byeData.findIndex(indexTesting);
