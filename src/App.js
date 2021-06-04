@@ -1,50 +1,99 @@
 import "./App.css";
-import { Table, Modal, Button, Form, Input } from "antd";
+import { Table, Modal, Button, Form, Input, Skeleton } from "antd";
 import "antd/dist/antd.css";
 
 import React, { useState, useEffect } from "react";
-// import { formatCountdown } from "antd/lib/statistic/utils";
-
-// let elementToRemove = 2;
 
 const App = () => {
-  // const editItem = () => {
-  //   console.log("Hello World")
-  // };
-
-  // Maybe filter out elements that are NOT the index
-
-  // const deleteItem = () => {
-  //   let byeData = data;
-  //   byeData.splice(0, 1);
-  //   setData([...byeData]);
-  // };
   const [data, setData] = useState([]);
+  const [type, setType] = useState("Add");
 
   const deleteItem = (funcData) => {
-    //[...data]
+    let allData = [...data];
 
-    let allData = [...data]; // r
-
-    console.log({ allData: allData });
-    console.log(funcData);
+    // console.log(allData);
+    // console.log({ allData: allData });
+    // console.log(funcData);
     // console.log(item);
-    // console.log("HELLO WORLD");
 
     const indexTesting = (element, index) =>
       JSON.stringify(element) === JSON.stringify(funcData);
 
-    // // console.log(item);
     let indexToDelete = allData.findIndex(indexTesting);
+    // console.log(indexToDelete);
 
     if (indexToDelete !== -1) {
-      allData.splice(indexToDelete, 1); // r
+      allData.splice(indexToDelete, 1);
     }
-    setData([...allData]); // r
+    setData([...allData]);
   };
-  // console.log(data);
 
-  //  How do I find index of row I am trying to delete?
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    setType("Add");
+  };
+
+  const saveEditedData = () => {
+    setIsModalVisible(false);
+    setType("Add");
+  };
+
+  const [firstNameTerm, setFirstNameTerm] = useState("");
+  const [lastNameTerm, setLastNameTerm] = useState("");
+  const [workPhoneTerm, setWorkPhoneTerm] = useState("");
+  const [homePhoneTerm, setHomePhoneTerm] = useState("");
+  const [cellPhoneTerm, setCellPhoneTerm] = useState("");
+
+  let newInfo = {
+    firstName: firstNameTerm,
+    lastName: lastNameTerm,
+    workPhone: workPhoneTerm,
+    homePhone: homePhoneTerm,
+    cellPhone: cellPhoneTerm,
+  };
+
+  const pushArray = () => {
+    let newData = data;
+
+    newData.push(newInfo);
+    setData([...newData]);
+    setIsModalVisible(false);
+  };
+
+  const editItem = (dataToEdit) => {
+    let allData = [...data];
+    // let isTrueModalVisible = [...isModalVisible]
+    // const [type, setType] = useState("Add New Contact");
+    setType("Edit New Contact");
+
+    const indexTesting = (element, index) =>
+      JSON.stringify(element) === JSON.stringify(dataToEdit);
+
+    // console.log(indexTesting);
+
+    let indexToEdit = allData.findIndex(indexTesting);
+    console.log(allData);
+    console.log(dataToEdit);
+    console.log(indexToEdit);
+
+    // <Modal data={dataToEdit}></Modal>;
+
+    <Modal rowData={dataToEdit} indexData={indexToEdit}></Modal>;
+
+    showModal();
+
+    setData([...data]);
+  };
 
   const columns = [
     {
@@ -77,13 +126,12 @@ const App = () => {
       key: "action",
       render: (a, data) => (
         <>
-          {/* <Button type="default" onClick={saveItem}>
-            Save
-          </Button> */}
-          <Button type="default" onClick={showModal}>
+          {/* {console.log(a)} */}
+          {/* {console.log(data)} */}
+          <Button type="default" onClick={() => editItem(data)}>
             Edit
           </Button>
-          {/* <Button type="default">Save</Button> */}
+
           <Button type="default" onClick={() => deleteItem(data)}>
             Delete
           </Button>
@@ -91,40 +139,6 @@ const App = () => {
       ),
     },
   ];
-  // try console.log(a) and data,
-  // let peter = {
-  //   dave: 3456,
-  //   bob: 4,
-  // };
-
-  // console.log(peter.dave);
-
-  // console.log(peter.bob);
-
-  //findIndex, using
-
-  // Array.push(objectName)
-  //in my case, data.push(objectName)
-
-  // get an object and push to the above array, use form to create an object (formObject as name?)
-
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-
-  // const [data, setData] = useState([]);
-
-  // console.log(data);
 
   React.useEffect(() => {
     const ifDataExists = localStorage.getItem("data-input");
@@ -137,59 +151,15 @@ const App = () => {
     localStorage.setItem("data-input", JSON.stringify(data));
   });
 
-  // save on button click, when it deletes and add
-
-  const [firstNameTerm, setFirstNameTerm] = useState("");
-  const [lastNameTerm, setLastNameTerm] = useState("");
-  const [workPhoneTerm, setWorkPhoneTerm] = useState("");
-  const [homePhoneTerm, setHomePhoneTerm] = useState("");
-  const [cellPhoneTerm, setCellPhoneTerm] = useState("");
-
-  // const [isEditing, setEditing] = useState(false);
-
-  // const editingInput = () => {
-  //   setEditing(true);
-  // };
-
-  // const notEditingInput = () => {
-  //   setEditing(false);
-  // };
-
-  let newInfo = {
-    firstName: firstNameTerm,
-    lastName: lastNameTerm,
-    workPhone: workPhoneTerm,
-    homePhone: homePhoneTerm,
-    cellPhone: cellPhoneTerm,
-  };
-
-  const pushArray = () => {
-    let newData = data;
-
-    newData.push(newInfo);
-    setData([...newData]);
-    setIsModalVisible(false);
-  };
-  // Array.splice([ITEM LOCATION], [Number of Item])
-
-  const saveItem = () => {
-    console.log("Hello World");
-  };
-
-  // const deleteItem = () => {
-  //   let byeData = data;
-  //   byeData.splice(0, 1);
-  //   setData([...byeData]);
-  // };
-
   return (
     <div className="App">
       <Table dataSource={data} columns={columns} />
       <Modal
-        title="Add New Contact"
+        title={type == "Add" ? "Add New Contact" : "Edit New Contact"}
         visible={isModalVisible}
-        onOk={pushArray}
+        onOk={type == "Add" ? pushArray : saveEditedData}
         onCancel={handleCancel}
+        modalRow={data}
       >
         <Form /*form={form} */ name="userForm">
           <Form.Item
@@ -245,28 +215,8 @@ const App = () => {
       <Button type="primary" onClick={showModal}>
         Add New Contact
       </Button>
-      {/* <Button type="default" onClick={editItem}>
-        Edit
-      </Button>
-      <Button type="default" onClick={deleteItem}>
-        Delete
-      </Button> */}
     </div>
   );
 };
 
 export default App;
-
-// Things I've tried
-
-//   // let indexToDelete = byeData.findIndex(testForIndex);
-// let indexToDelete = byeData.findIndex((element, index) => element === item);
-// let indexToDelete = byeData.findIndex(indexTesting);
-
-// let indexToDelete = byeData.findIndex(
-// w
-//   (element, index) => index === byeData[index]
-// );
-//   // let indexToDelete = byeData.findIndex(testForIndex);
-// let indexToDelete = byeData.findIndex((element, index) => element === item);
-// let indexToDelete = byeData.findIndex(indexTesting);
